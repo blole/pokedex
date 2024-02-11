@@ -14,7 +14,7 @@
     }
   ],
 
-  "postAttachCommand": "ln -sf /mnt/home/.zsh_history ~/",
+  "postAttachCommand": "git submodule update --init && git -C submodules/PokeAPI/sprites sparse-checkout set --no-cone \"sprites/pokemon/other/official-artwork\" \"!sprites/pokemon/other/official-artwork/shiny\" && ln -sf /mnt/home/.zsh_history ~/",
 
   "customizations": {
     "vscode": {

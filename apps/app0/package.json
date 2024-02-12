@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "generate-api": "zeus https://beta.pokeapi.co/graphql/v1beta src/ --graphql graphql"
+    "generate-api": "zeus https://beta.pokeapi.co/graphql/v1beta src/ --graphql graphql",
+    "build-search-grammar": "nearleyc src/search/grammar.ne --out src/search/grammar.ts"
   },
   "dependencies": {
     "@graphql-typed-document-node/core": "3.2.0",

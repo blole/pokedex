@@ -2,10 +2,12 @@
 @builtin "number.ne"
 @builtin "postprocessors.ne"
 
+main         -> _ union _                   {% (x): Node => x[1] %}
+
 union        -> intersection (
                   __ "OR" __ intersection   {% nth(3) %}
                 ):+                         {% ([x, y]): Union => (['or', x, ...y]) %}
-              | intersection                {% (x): Intersection | Node => x[0] %}
+              | intersection                {% (x): Node => x[0] %}
 
 intersection -> group (
                   __ group                  {% nth(1) %}

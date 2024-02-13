@@ -168,6 +168,7 @@ const grammar: Grammar = {
             );
         }
         },
+    {"name": "main", "symbols": ["_", "union", "_"], "postprocess": (x): Node => x[1]},
     {"name": "union$ebnf$1$subexpression$1$string$1", "symbols": [{"literal":"O"}, {"literal":"R"}], "postprocess": (d) => d.join('')},
     {"name": "union$ebnf$1$subexpression$1", "symbols": ["__", "union$ebnf$1$subexpression$1$string$1", "__", "intersection"], "postprocess": nth(3)},
     {"name": "union$ebnf$1", "symbols": ["union$ebnf$1$subexpression$1"]},
@@ -175,7 +176,7 @@ const grammar: Grammar = {
     {"name": "union$ebnf$1$subexpression$2", "symbols": ["__", "union$ebnf$1$subexpression$2$string$1", "__", "intersection"], "postprocess": nth(3)},
     {"name": "union$ebnf$1", "symbols": ["union$ebnf$1", "union$ebnf$1$subexpression$2"], "postprocess": (d) => d[0].concat([d[1]])},
     {"name": "union", "symbols": ["intersection", "union$ebnf$1"], "postprocess": ([x, y]): Union => (['or', x, ...y])},
-    {"name": "union", "symbols": ["intersection"], "postprocess": (x): Intersection | Node => x[0]},
+    {"name": "union", "symbols": ["intersection"], "postprocess": (x): Node => x[0]},
     {"name": "intersection$ebnf$1$subexpression$1", "symbols": ["__", "group"], "postprocess": nth(1)},
     {"name": "intersection$ebnf$1", "symbols": ["intersection$ebnf$1$subexpression$1"]},
     {"name": "intersection$ebnf$1$subexpression$2", "symbols": ["__", "group"], "postprocess": nth(1)},
@@ -220,7 +221,7 @@ const grammar: Grammar = {
     {"name": "__$ebnf$1", "symbols": ["__$ebnf$1", {"literal":" "}], "postprocess": (d) => d[0].concat([d[1]])},
     {"name": "__", "symbols": ["__$ebnf$1"], "postprocess": () => null}
   ],
-  ParserStart: "union",
+  ParserStart: "main",
 };
 
 export default grammar;

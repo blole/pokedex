@@ -3,27 +3,36 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --foreground: #000000;
+  --background: #ffffff;
+  --placeholder: #6b7280;
+  --input-background: #c0c0c0;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --foreground: #ffde00;
+    --background: #002030;
+    --placeholder: #a0a0a0;
+    --input-background: #153050;
   }
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  color: var(--foreground);
+  background: var(--background);
+}
+
+input,
+select,
+textarea {
+  background-color: var(--input-background);
+}
+
+input::placeholder,
+select::placeholder,
+textarea::placeholder {
+  color: var(--placeholder);
 }
 
 @layer utilities {

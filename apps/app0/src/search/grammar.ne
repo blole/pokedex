@@ -25,27 +25,30 @@ filter -> ( gen
 
 gen  -> "gen:"  comparator [1-9]               {% x => ["gen", x[1], parseInt(x[2])] %}
 id   -> "id:"   comparator unsigned_int        {% x => ["id", x[1], x[2]] %}
-name -> "name:" [a-z]:+                        {% x => ["name", "==", x[1].join("")] %}
-type -> "type:" ("fire" | "water" | "grass")   {% x => ["type", "==", x[1][0]] %}
+name -> "name:" [a-z]:+                        {% x => ["name", StringComparator.REGEX, x[1].join("")] %}
+type -> "type:" ("fire" | "water" | "grass")   {% x => ["type", StringComparator.REGEX, x[1][0]] %}
 
 comparator -> ( null   {% () => ["=="] %}
               | "<"
               | ">"
               | ">="
               | "<="
-              )        {% (x): Comparator => x[0][0] %}
+              )        {% (x): NumberComparator => x[0][0] %}
 
 _  -> " ":*   {% () => null %}
 __ -> " ":+   {% () => null %}
 
 @{%
 
-export enum Comparator {
+export enum NumberComparator {
   EQ = "==",
   GT = ">",
   GTE = ">=",
   LT = "<",
   LTE = "<=",
+}
+export enum StringComparator {
+  REGEX = "regex",
 }
 export enum Field {
   GEN = "gen",
@@ -58,9 +61,9 @@ export type Node = Union | Intersection | Filter;
 export type Union = ["or", Node, Node, ...Node[]];
 export type Intersection = ["and", Node, Node, ...Node[]];
 export type Filter =
-  | [Field.GEN, Comparator, number]
-  | [Field.ID, Comparator, number]
-  | [Field.NAME, Comparator.EQ, string]
-  | [Field.TYPE, Comparator.EQ, string];
+  | [Field.GEN, NumberComparator, number]
+  | [Field.ID, NumberComparator, number]
+  | [Field.NAME, StringComparator.REGEX, string]
+  | [Field.TYPE, StringComparator.REGEX, string];
 
 %}

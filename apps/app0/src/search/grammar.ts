@@ -28,12 +28,15 @@ function $(o) {
 
 
 
-export enum Comparator {
+export enum NumberComparator {
   EQ = "==",
   GT = ">",
   GTE = ">=",
   LT = "<",
   LTE = "<=",
+}
+export enum StringComparator {
+  REGEX = "regex",
 }
 export enum Field {
   GEN = "gen",
@@ -46,10 +49,10 @@ export type Node = Union | Intersection | Filter;
 export type Union = ["or", Node, Node, ...Node[]];
 export type Intersection = ["and", Node, Node, ...Node[]];
 export type Filter =
-  | [Field.GEN, Comparator, number]
-  | [Field.ID, Comparator, number]
-  | [Field.NAME, Comparator.EQ, string]
-  | [Field.TYPE, Comparator.EQ, string];
+  | [Field.GEN, NumberComparator, number]
+  | [Field.ID, NumberComparator, number]
+  | [Field.NAME, StringComparator.REGEX, string]
+  | [Field.TYPE, StringComparator.REGEX, string];
 
 
 interface NearleyToken {
@@ -197,7 +200,7 @@ const grammar: Grammar = {
     {"name": "name$string$1", "symbols": [{"literal":"n"}, {"literal":"a"}, {"literal":"m"}, {"literal":"e"}, {"literal":":"}], "postprocess": (d) => d.join('')},
     {"name": "name$ebnf$1", "symbols": [/[a-z]/]},
     {"name": "name$ebnf$1", "symbols": ["name$ebnf$1", /[a-z]/], "postprocess": (d) => d[0].concat([d[1]])},
-    {"name": "name", "symbols": ["name$string$1", "name$ebnf$1"], "postprocess": x => ["name", "==", x[1].join("")]},
+    {"name": "name", "symbols": ["name$string$1", "name$ebnf$1"], "postprocess": x => ["name", StringComparator.REGEX, x[1].join("")]},
     {"name": "type$string$1", "symbols": [{"literal":"t"}, {"literal":"y"}, {"literal":"p"}, {"literal":"e"}, {"literal":":"}], "postprocess": (d) => d.join('')},
     {"name": "type$subexpression$1$string$1", "symbols": [{"literal":"f"}, {"literal":"i"}, {"literal":"r"}, {"literal":"e"}], "postprocess": (d) => d.join('')},
     {"name": "type$subexpression$1", "symbols": ["type$subexpression$1$string$1"]},
@@ -205,7 +208,7 @@ const grammar: Grammar = {
     {"name": "type$subexpression$1", "symbols": ["type$subexpression$1$string$2"]},
     {"name": "type$subexpression$1$string$3", "symbols": [{"literal":"g"}, {"literal":"r"}, {"literal":"a"}, {"literal":"s"}, {"literal":"s"}], "postprocess": (d) => d.join('')},
     {"name": "type$subexpression$1", "symbols": ["type$subexpression$1$string$3"]},
-    {"name": "type", "symbols": ["type$string$1", "type$subexpression$1"], "postprocess": x => ["type", "==", x[1][0]]},
+    {"name": "type", "symbols": ["type$string$1", "type$subexpression$1"], "postprocess": x => ["type", StringComparator.REGEX, x[1][0]]},
     {"name": "comparator$subexpression$1", "symbols": [], "postprocess": () => ["=="]},
     {"name": "comparator$subexpression$1", "symbols": [{"literal":"<"}]},
     {"name": "comparator$subexpression$1", "symbols": [{"literal":">"}]},
@@ -213,7 +216,7 @@ const grammar: Grammar = {
     {"name": "comparator$subexpression$1", "symbols": ["comparator$subexpression$1$string$1"]},
     {"name": "comparator$subexpression$1$string$2", "symbols": [{"literal":"<"}, {"literal":"="}], "postprocess": (d) => d.join('')},
     {"name": "comparator$subexpression$1", "symbols": ["comparator$subexpression$1$string$2"]},
-    {"name": "comparator", "symbols": ["comparator$subexpression$1"], "postprocess": (x): Comparator => x[0][0]},
+    {"name": "comparator", "symbols": ["comparator$subexpression$1"], "postprocess": (x): NumberComparator => x[0][0]},
     {"name": "_$ebnf$1", "symbols": []},
     {"name": "_$ebnf$1", "symbols": ["_$ebnf$1", {"literal":" "}], "postprocess": (d) => d[0].concat([d[1]])},
     {"name": "_", "symbols": ["_$ebnf$1"], "postprocess": () => null},

@@ -1,19 +1,30 @@
 import { expect, test } from "@jest/globals";
 import { parseSearchString } from "./searchStringParser";
 import { err, ok } from "@/util/result";
+import { Field, NumberComparator, StringComparator } from "./grammar";
 
 test("can parse single fields", () => {
-  expect(parseSearchString("id:<42")).toEqual(ok(["id", "<", 42]));
-  expect(parseSearchString(" name:pika")).toEqual(ok(["name", "==", "pika"]));
-  expect(parseSearchString("gen:>=9 ")).toEqual(ok(["gen", ">=", 9]));
+  expect(parseSearchString("id:<42")).toEqual(
+    ok([Field.ID, NumberComparator.LT, 42]),
+  );
+  expect(parseSearchString(" name:pika")).toEqual(
+    ok([Field.NAME, StringComparator.REGEX, "pika"]),
+  );
+  expect(parseSearchString("gen:>=9 ")).toEqual(
+    ok([Field.GEN, NumberComparator.GTE, 9]),
+  );
 });
 
 test("can parse more complicated examples", () => {
   expect(parseSearchString("id:<42 name:pika OR gen:>=9")).toEqual(
     ok([
       "or",
-      ["and", ["id", "<", 42], ["name", "==", "pika"]],
-      ["gen", ">=", 9],
+      [
+        "and",
+        [Field.ID, NumberComparator.LT, 42],
+        [Field.NAME, StringComparator.REGEX, "pika"],
+      ],
+      [Field.GEN, NumberComparator.GTE, 9],
     ]),
   );
   expect(
@@ -21,8 +32,16 @@ test("can parse more complicated examples", () => {
   ).toEqual(
     ok([
       "and",
-      ["or", ["id", "==", 2], ["and", ["name", "==", "rai"], ["gen", "==", 3]]],
-      ["gen", "==", 5],
+      [
+        "or",
+        [Field.ID, NumberComparator.EQ, 2],
+        [
+          "and",
+          [Field.NAME, StringComparator.REGEX, "rai"],
+          [Field.GEN, NumberComparator.EQ, 3],
+        ],
+      ],
+      [Field.GEN, NumberComparator.EQ, 5],
     ]),
   );
 });

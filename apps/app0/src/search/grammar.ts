@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Generated automatically by nearley, version 2.20.1
 // http://github.com/Hardmath123/nearley
 // Bypasses TS6133. Allow declared but unused functions.
@@ -189,7 +190,7 @@ const grammar: Grammar = {
     {"name": "filter$subexpression$1", "symbols": ["type"]},
     {"name": "filter", "symbols": ["filter$subexpression$1"], "postprocess": (x): Filter => x[0][0]},
     {"name": "gen$string$1", "symbols": [{"literal":"g"}, {"literal":"e"}, {"literal":"n"}, {"literal":":"}], "postprocess": (d) => d.join('')},
-    {"name": "gen", "symbols": ["gen$string$1", "comparator", /[1-9]/], "postprocess": x => ["gen", x[1], x[2]]},
+    {"name": "gen", "symbols": ["gen$string$1", "comparator", /[1-9]/], "postprocess": x => ["gen", x[1], parseInt(x[2])]},
     {"name": "id$string$1", "symbols": [{"literal":"i"}, {"literal":"d"}, {"literal":":"}], "postprocess": (d) => d.join('')},
     {"name": "id", "symbols": ["id$string$1", "comparator", "unsigned_int"], "postprocess": x => ["id", x[1], x[2]]},
     {"name": "name$string$1", "symbols": [{"literal":"n"}, {"literal":"a"}, {"literal":"m"}, {"literal":"e"}, {"literal":":"}], "postprocess": (d) => d.join('')},

@@ -21,7 +21,7 @@ filter -> ( gen
           | type
           )        {% (x): Filter => x[0][0] %}
 
-gen  -> "gen:"  comparator [1-9]               {% x => ["gen", x[1], x[2]] %}
+gen  -> "gen:"  comparator [1-9]               {% x => ["gen", x[1], parseInt(x[2])] %}
 id   -> "id:"   comparator unsigned_int        {% x => ["id", x[1], x[2]] %}
 name -> "name:" [a-z]:+                        {% x => ["name", "==", x[1].join("")] %}
 type -> "type:" ("fire" | "water" | "grass")   {% x => ["type", "==", x[1][0]] %}

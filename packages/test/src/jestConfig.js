@@ -196,6 +196,7 @@ export const jestConfig = {
 
   // modulePaths: ['.'],
   moduleNameMapper: {
+    '^@/(.+)$': ['<rootDir>/src/$1'],
     '^@blole/([^/]+)$': ['<rootDir>/../../apps/$1/src/', '<rootDir>/../../packages/$1/src/'],
     '^@blole/([^/]+)/(.+)$': ['<rootDir>/../../apps/$1/src/$2', '<rootDir>/../../packages/$1/src/$2'],
   },

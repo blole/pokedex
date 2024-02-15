@@ -1,4 +1,6 @@
 "use client";
+import { convertParsedSearchToGraphQl } from "@/search/convertParsedSearchToGraphQl";
+import { parseSearchString } from "@/search/searchStringParser";
 import { Chain, GraphQLTypes, InputType, Selector, order_by } from "@/zeus";
 import useSWR from "swr";
 
@@ -15,12 +17,20 @@ export type PokemonResponse = InputType<
 >;
 
 const searchPokemon = async (search: string): Promise<PokemonResponse[]> => {
+  const parsedSearch = parseSearchString(search);
+
+  if (parsedSearch.kind != "ok") {
+    throw Error(parsedSearch.error.code);
+  }
+
+  const where = convertParsedSearchToGraphQl(parsedSearch.value);
+
   const response = await chain("query")({
     pokemon_v2_pokemonspecies: [
       {
         limit: 10,
         order_by: [{ id: order_by.asc }],
-        where: { name: { _iregex: search } },
+        where,
       },
       pokemonSpeciesQuery,
     ],

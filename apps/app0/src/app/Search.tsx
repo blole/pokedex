@@ -1,3 +1,4 @@
+import { parseSearchString } from "@/search/searchStringParser";
 import React, { ChangeEvent, KeyboardEvent, useCallback } from "react";
 
 export type SearchProps = {

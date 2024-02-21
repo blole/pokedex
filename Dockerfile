@@ -19,7 +19,7 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | P
 COPY .nvmrc ./
 RUN nvm install && \
    corepack enable && \
-   corepack prepare pnpm@8.15.1 --activate
+   corepack prepare pnpm@8.15.3 --activate
 RUN mkdir /output/ && printf "\
 nvm  $(nvm -v)\n\
 node $(node -v)\n\

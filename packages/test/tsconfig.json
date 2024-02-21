@@ -1,0 +1,29 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {}
+  },
+  "include": [
+    "*.js",
+    "*.jsx",
+    "*.cjs",
+    "*.mjs",
+    "*.mjsx",
+    "src/**/*.js",
+    "src/**/*.jsx",
+    "src/**/*.cjs",
+    "src/**/*.mjs",
+    "src/**/*.mjsx",
+    "*.ts",
+    "*.tsx",
+    "*.cts",
+    "*.mts",
+    "*.mtsx",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.cts",
+    "src/**/*.mts",
+    "src/**/*.mtsx"
+  ]
+}

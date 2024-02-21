@@ -1,0 +1,21 @@
+{
+  "files.exclude": {
+    ".pnpm-store/": true,
+    "**/tsconfig.tsbuildinfo": true
+  },
+  "search.exclude": {
+    "pnpm-lock.yaml": true,
+    "**/tsconfig.tsbuildinfo": true
+  },
+
+  "typescript.tsdk": "node_modules/typescript/lib/",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "typescript.validate.enable": true,
+
+  "prettier.requireConfig": true,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}

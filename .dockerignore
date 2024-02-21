@@ -1,0 +1,16 @@
+**/*Dockerfile
+**/.dockerignore
+**/.gitignore
+
+**/.next/
+**/coverage/
+**/node_modules/
+**/tsconfig.tsbuildinfo
+
+.devcontainer/
+.github/
+.pnpm-store/
+.vscode/
+node_modules/
+scripts/
+.code-workspace

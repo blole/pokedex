@@ -1,0 +1,57 @@
+name: test
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  TERM: xterm-256color
+
+on: [push]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: set up docker buildx
+        uses: docker/setup-buildx-action@v3
+      - name: run dockerized test
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Dockerfile
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          target: ci
+          outputs: type=local,dest=/tmp/output/
+      - name: print dockerized test output
+        run: scripts/cat-all.sh /tmp/output/ --github
+
+  packages-lint-publish:
+    needs: lint-and-test
+    runs-on: ubuntu-22.04
+    if: ${{ startsWith(github.ref, 'refs/tags/node-setup-lint-') }}
+    steps:
+      - name: Extract version from tag
+        id: extract_tag_version
+        run: |
+          TAG_VERSION="${GITHUB_REF#refs/tags/node-setup-lint-}"
+          echo "extracted tag version $TAG_VERSION"
+          echo "TAG_VERSION=$TAG_VERSION" >> "$GITHUB_OUTPUT"
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: set up docker buildx
+        uses: docker/setup-buildx-action@v3
+      - name: run dockerized publish
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Dockerfile
+          cache-from: type=gha
+          target: packages-lint-publish
+          build-args: |
+            TAG_VERSION=${{ steps.extract_tag_version.outputs.TAG_VERSION }}
+          secrets: |
+            NODE_AUTH_TOKEN=${{ secrets.NPM_PUBLISH_TO_BLOLE }}

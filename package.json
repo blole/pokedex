@@ -1,0 +1,17 @@
+{
+  "name": "@blole/pokedex",
+  "description": "",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "lint": "pnpm run -r lint",
+    "test": "pnpm run -r test"
+  },
+  "devDependencies": {
+    "typescript": "4.9.5"
+  }
+}

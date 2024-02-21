@@ -26,7 +26,7 @@ body {
 input,
 select,
 textarea,
-div[role="textbox"] {
+div[role='textbox'] {
   background-color: var(--input-background);
 }
 

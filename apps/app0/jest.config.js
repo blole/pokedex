@@ -1,3 +1,3 @@
-import { jestConfig } from "@blole/pokedex-test";
+import { jestConfig } from '@blole/pokedex-test';
 
 export default jestConfig;

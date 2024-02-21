@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from 'next/image';
 
 export type PokemonCardProps = {
   id: number;
@@ -7,10 +7,10 @@ export type PokemonCardProps = {
 
 export const PokemonCard = ({ id, name }: PokemonCardProps) => {
   return (
-    <div className="group">
-      <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-sky-800 dark:bg-sky-950">
+    <div className='group'>
+      <div className='aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-sky-800 dark:bg-sky-950'>
         <Image
-          className="h-full w-full object-cover object-center group-hover:opacity-60"
+          className='h-full w-full object-cover object-center group-hover:opacity-60'
           src={`/sprites/${id}.png`}
           alt={`${name} art`}
           width={475}
@@ -18,7 +18,7 @@ export const PokemonCard = ({ id, name }: PokemonCardProps) => {
           priority
         />
       </div>
-      <h3 className="text-lg text-center">{name}</h3>
+      <h3 className='text-lg text-center'>{name}</h3>
     </div>
   );
 };

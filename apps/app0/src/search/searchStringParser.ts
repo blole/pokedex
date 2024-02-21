@@ -1,4 +1,4 @@
-import nearley from 'nearley';
+import { Parser, Grammar } from 'nearley';
 import grammar, { type Node } from './grammar';
 import { Result, err, ok } from '@/util/result';
 
@@ -20,7 +20,7 @@ const isParserError = (error: unknown): error is ParserError => {
 };
 
 export const parseSearchString = (search: string): Result<Node, UnexpectedAtOffset | UnexpectedEndOfInput> => {
-  const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
+  const parser = new Parser(Grammar.fromCompiled(grammar));
   try {
     parser.feed(search);
     const results = parser.results as Node[];

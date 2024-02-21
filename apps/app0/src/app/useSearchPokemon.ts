@@ -43,7 +43,7 @@ export type UseSearchPokemonResult = {
 };
 
 export const useSearchPokemon = (search: string): UseSearchPokemonResult => {
-  const { data, error, isLoading } = useSWR(search, searchPokemon);
+  const { data, error, isLoading } = useSWR<PokemonResponse[], unknown>(search, searchPokemon);
 
   return {
     pokemon: data,

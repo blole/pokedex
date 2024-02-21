@@ -8,7 +8,7 @@
     "build-search-grammar": "echo '/* eslint-disable */\n// @ts-nocheck' > src/search/grammar.ts && nearleyc src/search/grammar.ne >> src/search/grammar.ts",
     "build": "next build",
     "dev": "next dev",
-    "lint": "eslint \"**/*.{js,jsx,ts,tsx,json,md,html}\" --max-warnings=0",
+    "lint": "eslint \"**/*.{js,jsx,ts,tsx,json,html}\" --max-warnings=0",
     "start": "next start",
     "test": "jest"
   },

@@ -5,9 +5,8 @@ import { Search } from './Search';
 import { useSearchPokemon } from './useSearchPokemon';
 
 export default function Home() {
-  const [search, setSearch] = useState('');
   const [appliedSearch, setAppliedSearch] = useState('');
-  const { pokemon, error, isLoading } = useSearchPokemon(appliedSearch);
+  const { pokemon } = useSearchPokemon(appliedSearch);
 
   return (
     <main className='flex min-h-full flex-1 flex-col px-6 py-3 lg:px-8 gap-y-3'>

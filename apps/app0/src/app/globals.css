@@ -25,7 +25,8 @@ body {
 
 input,
 select,
-textarea {
+textarea,
+div[role="textbox"] {
   background-color: var(--input-background);
 }
 
@@ -33,6 +34,11 @@ input::placeholder,
 select::placeholder,
 textarea::placeholder {
   color: var(--placeholder);
+}
+
+.underline-red {
+  @apply underline;
+  text-decoration-color: red;
 }
 
 @layer utilities {

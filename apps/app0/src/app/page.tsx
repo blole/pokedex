@@ -13,8 +13,7 @@ export default function Home() {
     <main className="flex min-h-full flex-1 flex-col px-6 py-3 lg:px-8 gap-y-3">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <Search
-          value={search}
-          setValue={setSearch}
+          initialValue="gen:1"
           onSubmit={setAppliedSearch}
           className="w-full rounded-full outline-none leading-tight border-0 py-2 px-4 text-sm"
         />

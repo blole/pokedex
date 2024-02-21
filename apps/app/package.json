@@ -7,6 +7,7 @@
     "build-api": "zeus https://beta.pokeapi.co/graphql/v1beta src/ --graphql graphql",
     "build-search-grammar": "echo '/* eslint-disable */\n// @ts-nocheck' > src/search/grammar.ts && nearleyc src/search/grammar.ne >> src/search/grammar.ts",
     "build": "next build",
+    "check": "tsc --noEmit",
     "dev": "next dev",
     "lint": "eslint \"**/*.{js,jsx,ts,tsx,json,html}\" --max-warnings=0",
     "start": "next start",

@@ -5,10 +5,10 @@
   "type": "module",
   "scripts": {
     "build-api": "zeus https://beta.pokeapi.co/graphql/v1beta src/ --graphql graphql",
-    "build-search-grammar": "echo '// @ts-nocheck' > src/search/grammar.ts && nearleyc src/search/grammar.ne >> src/search/grammar.ts",
+    "build-search-grammar": "echo '/* eslint-disable */\n// @ts-nocheck' > src/search/grammar.ts && nearleyc src/search/grammar.ne >> src/search/grammar.ts",
     "build": "next build",
     "dev": "next dev",
-    "lint": "next lint",
+    "lint": "eslint \"**/*.{js,jsx,ts,tsx,json,md,html}\" --max-warnings=0",
     "start": "next start",
     "test": "jest"
   },
@@ -25,6 +25,7 @@
     "swr": "2.2.4"
   },
   "devDependencies": {
+    "@blole/node-setup-lint": "2.0.0",
     "@blole/pokedex-test": "workspace:*",
     "@graphql-codegen/cli": "5.0.2",
     "@graphql-codegen/client-preset": "4.2.2",

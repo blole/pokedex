@@ -10,7 +10,7 @@
     "test": "jest"
   },
   "devDependencies": {
-    "@blole/node-setup-lint": "1.0.2",
+    "@blole/node-setup-lint": "2.0.0",
     "@jest/globals": "29.7.0",
     "@types/node": "20.11.17",
     "jest": "29.7.0",

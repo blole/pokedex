@@ -49,7 +49,7 @@ RUN pnpm install --color --frozen-lockfile --offline |& tee /output/pnpm-install
 
 FROM common-dependencies AS apps-app
 RUN mkdir -p /output/apps/app/
-COPY submodules/PokeAPI/sprites/sprites/pokemon/other/official-artwork/ submodules/PokeAPI/sprites/sprites/pokemon/other/official-artwork/
+COPY submodules/PokeAPI/sprites/sprites/pokemon/other/official-artwork/*.png submodules/PokeAPI/sprites/sprites/pokemon/other/official-artwork/
 COPY apps/app/ apps/app/
 COPY packages/test/ packages/test/
 WORKDIR /repo/apps/app/

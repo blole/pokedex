@@ -3,3 +3,7 @@
 **/tsconfig.tsbuildinfo
 /packages/*/dist/
 /.pnpm-store/
+
+apps/app/.next/
+apps/app/out/
+apps/app/next-env.d.ts

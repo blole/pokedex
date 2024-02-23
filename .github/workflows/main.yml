@@ -35,6 +35,13 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    concurrency:
+      group: pages
+      cancel-in-progress: false
     needs: lint-and-test
     runs-on: ubuntu-22.04
     if: ${{ startsWith(github.ref, 'refs/tags/v') }}

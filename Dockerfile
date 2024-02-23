@@ -49,9 +49,14 @@ RUN pnpm install --color --frozen-lockfile --offline |& tee /output/pnpm-install
 
 FROM common-dependencies AS apps-app
 RUN mkdir -p /output/apps/app/
+COPY submodules/PokeAPI/sprites/sprites/pokemon/other/official-artwork/ submodules/PokeAPI/sprites/sprites/pokemon/other/official-artwork/
 COPY apps/app/ apps/app/
 COPY packages/test/ packages/test/
 WORKDIR /repo/apps/app/
+
+FROM apps-app AS apps-app-build
+ENV NEXT_TELEMETRY_DISABLED 0
+RUN FORCE_COLOR=1 pnpm build |& tee /output/apps/app/build.txt
 
 FROM apps-app AS apps-app-check
 RUN pnpm check |& tee /output/apps/app/check.txt
@@ -81,9 +86,15 @@ RUN pnpm test --color |& tee /output/packages/test/test.txt
 
 
 FROM scratch AS ci
+COPY --from=apps-app-build /output/ /
 COPY --from=apps-app-check /output/ /
 COPY --from=apps-app-lint /output/ /
 COPY --from=apps-app-test /output/ /
 COPY --from=packages-test-check /output/ /
 COPY --from=packages-test-lint /output/ /
 COPY --from=packages-test-test /output/ /
+
+
+
+FROM scratch AS build
+COPY --from=apps-app-build /repo/apps/app/out/ /

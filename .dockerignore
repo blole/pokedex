@@ -7,6 +7,8 @@
 **/node_modules/
 **/tsconfig.tsbuildinfo
 
+apps/app/out/
+
 .devcontainer/
 .github/
 .pnpm-store/

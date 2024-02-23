@@ -14,3 +14,7 @@ COPY .nvmrc ./
 RUN nvm install && \
    corepack enable && \
    corepack prepare pnpm@8.15.3 --activate
+
+RUN cat <<EOF >> "$BASH_ENV"
+alias dive="docker run -ti --rm  -v /var/run/docker.sock:/var/run/docker.sock wagoodman/dive"
+EOF

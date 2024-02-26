@@ -11,7 +11,7 @@ export const PokemonCard = ({ id, name }: PokemonCardProps) => {
       <div className='aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-sky-800 dark:bg-sky-950'>
         <Image
           className='h-full w-full object-cover object-center group-hover:opacity-60'
-          src={`/sprites/${id}.png`}
+          src={`${process.env.NEXT_PUBLIC_BASE_PATH}/sprites/${id}.png`}
           alt={`${name} art`}
           width={475}
           height={475}

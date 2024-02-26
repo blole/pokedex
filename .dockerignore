@@ -5,6 +5,7 @@
 **/.next/
 **/coverage/
 **/node_modules/
+**/.env*.local
 **/tsconfig.tsbuildinfo
 
 apps/app/out/

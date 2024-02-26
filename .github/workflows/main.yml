@@ -61,6 +61,8 @@ jobs:
           outputs: type=local,dest=/tmp/build/
           provenance: false
           target: build
+      - name: fix output permissions
+        run: chmod 0755 /tmp/build/
       - name: upload built artifact
         uses: actions/upload-pages-artifact@v3.0.1
         with:

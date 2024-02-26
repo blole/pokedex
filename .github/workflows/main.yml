@@ -22,12 +22,12 @@ jobs:
       - name: run dockerized test
         uses: docker/build-push-action@v5
         with:
-          context: .
-          file: Dockerfile
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          target: ci
+          context: .
+          file: Dockerfile
           outputs: type=local,dest=/tmp/output/
+          target: ci
       - name: print dockerized test output
         run: scripts/cat-all.sh /tmp/output/ --github
 
@@ -55,11 +55,12 @@ jobs:
       - name: run dockerized build
         uses: docker/build-push-action@v5
         with:
+          cache-from: type=gha
           context: .
           file: Dockerfile
-          cache-from: type=gha
-          target: build
           outputs: type=local,dest=/tmp/build/
+          provenance: false
+          target: build
       - name: upload built artifact
         uses: actions/upload-pages-artifact@v3
         with:

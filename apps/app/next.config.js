@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 export default {
+  assetPrefix: '/pokedex/',
+  basePath: '/pokedex',
   eslint: {
     ignoreDuringBuilds: true,
   },

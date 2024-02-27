@@ -1,11 +1,12 @@
+import { useCallback, useEffect, useState, type KeyboardEvent } from 'react';
 import { parseSearchString } from '@/search/searchStringParser';
-import React, { useCallback, useState } from 'react';
 import { createEditor, type BaseEditor, type Descendant, type Range, Text, BaseRange, NodeEntry } from 'slate';
 import { Slate, Editable, withReact, type ReactEditor, RenderLeafProps } from 'slate-react';
 import { withHistory } from 'slate-history';
 
 export type SearchProps = {
-  initialValue: string;
+  value: string;
+  setValue: (value: string) => void;
   onSubmit: (value: string) => void;
   className?: string;
 };
@@ -35,14 +36,8 @@ const RenderLeaf = ({ attributes, leaf, children }: RenderLeafProps) => {
   }
 };
 
-export const Search = ({ initialValue, onSubmit, className }: SearchProps) => {
+export const Search = ({ value, setValue, onSubmit, className }: SearchProps) => {
   const [editor] = useState(() => withReact(withHistory(createEditor())));
-
-  // maybe not the best way to do it, but keep a copy of
-  // the string representation of the value
-  const [value, setValue] = useState<string>(initialValue);
-
-  const [initialElement] = useState<CustomElement[]>(() => [{ children: [{ text: initialValue }] }]);
 
   const parsedSearch = parseSearchString(value);
   const errorAtOffset: number | null =
@@ -61,14 +56,28 @@ export const Search = ({ initialValue, onSubmit, className }: SearchProps) => {
     }
   };
 
-  const onChange = useCallback((descendants: Descendant[]) => {
-    // I think we're always given the root element, so this is always true?
-    if ('children' in descendants[0]) {
-      setValue(descendants[0].children[0].text);
+  useEffect(() => {
+    // this is a workaround to make slate behave like a controlled component, but
+    // works ok since we're only using slate to decorate the input
+    // https://github.com/ianstormtaylor/slate/issues/4612#issuecomment-1781245820
+    const descendants: Descendant[] = editor.children;
+    if ('children' in descendants[0] && descendants[0].children[0].text !== value) {
+      editor.children = [{ children: [{ text: value }] }];
+      editor.onChange();
     }
-  }, []);
+  }, [editor, value]);
 
-  const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+  const onChange = useCallback(
+    (descendants: Descendant[]) => {
+      // I think we're always given the root element, so this is always true?
+      if ('children' in descendants[0]) {
+        setValue(descendants[0].children[0].text);
+      }
+    },
+    [setValue],
+  );
+
+  const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'Enter') {
       event.preventDefault();
       onSubmit(value);
@@ -76,7 +85,7 @@ export const Search = ({ initialValue, onSubmit, className }: SearchProps) => {
   };
 
   return (
-    <Slate editor={editor} initialValue={initialElement} onValueChange={onChange}>
+    <Slate editor={editor} initialValue={[{ children: [{ text: value }] }]} onValueChange={onChange}>
       <Editable
         decorate={decorate}
         renderLeaf={RenderLeaf}

@@ -1,6 +1,6 @@
 import { Parser, Grammar } from 'nearley';
 import grammar, { type Node } from './grammar';
-import { Result, err, ok } from '@/util/result';
+import { Result, err, ok } from '@/utils/result';
 
 export type UnexpectedAtOffset = {
   code: 'UnexpectedAtOffset';

@@ -1,6 +1,6 @@
 import { expect, test } from '@jest/globals';
 import { parseSearchString } from './searchStringParser';
-import { err, ok } from '@/util/result';
+import { err, ok } from '@/utils/result';
 import { Field, NumberComparator, StringComparator } from './grammar';
 
 test('can parse single fields', () => {

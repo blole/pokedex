@@ -2,7 +2,7 @@ import { eslintConfig } from '@blole/node-setup-lint';
 
 export default [
   {
-    ignores: ['.next/', 'coverage/'],
+    ignores: ['.next/', 'coverage/', 'out/'],
   },
   eslintConfig.md,
   eslintConfig.json,
